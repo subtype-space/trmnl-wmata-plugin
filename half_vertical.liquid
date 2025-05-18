@@ -1,0 +1,64 @@
+<style media="screen">
+.line {
+    display: inline-flex;
+    height: 35px;
+    width: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+    justify-content: center;
+    -moz-border-radius: 30px; /* or 50% */
+    border-radius: 30px; /* or 50% */
+
+    background-color: black;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+    font-family: "Helvetica", sans-serif;
+}
+</style>
+
+<div class="layout layout--col">
+  <div class="flex w-full" >
+    <table class="table">
+      <thead>
+        <tr>
+          <th><span class="title">Line</span></th>
+          <th><span class="title">Car</span></th>
+          <th><span class="title">Destination</span></th>
+          <th><span class="title">Min</span></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        {%- if Trains.size == 0 -%}
+        <tr>
+          <td><span class="label label--gray-out">N/A</span></td>
+          <td><span class="label label--gray-out">0</span></td>
+          <td><span class="label label--gray-out">WMATA Closed</span></td>
+          <td><span class="label label--gray-out">Closed</span></td>
+        </tr>
+        {%- else -%}
+        {% for trains in Trains %}
+        {%- if forloop.index0 < 6 -%}
+          <tr>
+            <td><span class="line">{{ trains.Line }}</span></td>
+            <td><span class="label" >{{ trains.Car }}</span></td>
+            <td><span class="label">{{ trains.Destination }}</span></td>
+            {%- if trains.Min == "BRD" or trains.Min == "ARR" -%}
+            <td><span class="label label--inverted" style="width:fit-content;">{{ trains.Min }}</span></td>
+            {%- else -%}
+            <td><span class="label">{{ trains.Min }}</span></td>
+            {%- endif -%}
+          </tr>
+          {%- endif -%}
+          {% endfor %}
+          {%- endif -%}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="title_bar">
+  <img class="image" src="https://upload.wikimedia.org/wikipedia/commons/0/0a/WMATA_Metro_Logo_small.svg" />
+  <span class="title">{{ Trains[0].LocationName | default: "Closed"}}</span>
+  <span class="instance">{{ 'now' | date: '%s' | plus: trmnl.user.utc_offset | date: '%H:%M' }}</span>
+</div>

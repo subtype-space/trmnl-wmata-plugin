@@ -1,0 +1,23 @@
+---
+strategy: polling
+no_screen_padding: 'no'
+dark_mode: 'no'
+static_data: ''
+polling_verb: get
+polling_url: https://api.wmata.com/StationPrediction.svc/json/GetPrediction/{{ station_code }}
+polling_headers: api_key={{ api_key }}&Cache-Control=no-cache
+id: 21537
+custom_fields:
+- keyname: api_key
+  field_type: string
+  name: API Key
+  description: The WMATA API key to use
+  help_text: <a href="https://developer.wmata.com/" target="_blank">You can obtain an WMATA API Key by clicking <span class="underline">here</span>.</a>
+- keyname: station_code
+  field_type: string
+  name: Station Code
+  help_text: <a href="https://gist.github.com/emma-k-alexandra/72d2a19e3ebd280e9640f4414f063d6b" target="_blank">You can see a list of station codes by clicking <span class="underline">here</span>.</a>
+  default: A01,C01
+  description: The station code or codes to get real time rail predictions for. For stations that have more than one platform, pass in both station codes (e.g. "A01,C01" for all platforms at Metro Center)
+name: DC Metro Station Schedule
+refresh_interval: 15
